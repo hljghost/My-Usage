@@ -1,0 +1,66 @@
+name: My-Usage
+options:
+  bundleIdPrefix: com.myusage
+  deploymentTarget:
+    macOS: "13.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+targets:
+  My-Usage:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/MyUsage
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.myusage.app
+        PRODUCT_NAME: My-Usage
+        PRODUCT_MODULE_NAME: MyUsage
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_CFBundleDisplayName: My-Usage
+        INFOPLIST_KEY_NSHumanReadableCopyright: "MIT"
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_ALLOWED: YES
+        CODE_SIGNING_REQUIRED: NO
+        LD_RUNPATH_SEARCH_PATHS:
+          - "$(inherited)"
+          - "@executable_path/../Frameworks"
+    info:
+      path: Sources/MyUsage/Info.plist
+      properties:
+        LSUIElement: true
+        CFBundleDisplayName: My-Usage
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        NSPrincipalClass: NSApplication
+  My-UsageTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: My-Usage
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.myusage.tests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: NO
+schemes:
+  My-Usage:
+    build:
+      targets:
+        My-Usage: all
+        My-UsageTests: [test]
+    test:
+      targets:
+        - My-UsageTests
+    run:
+      config: Debug
